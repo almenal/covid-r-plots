@@ -7,7 +7,6 @@ setwd('~/Documents/COVID-19')
 data_conf = read.csv('./csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv')
 data_died = read.csv('./csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv')
 data_recov = read.csv('./csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv')
-pop = read.csv('population-by-broad-age-group.csv') #Population data per country
 
 # I realized that there is an inconsistency in the naming of Diamond Princess:
 data_recov = data_recov %>% 
