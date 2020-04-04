@@ -9,3 +9,9 @@ I got the raw data from the [John's Hopkins University's repository](https://git
 For now, this repo consists in one script reshaping the data as a ggplot-friendly dataframe and exporting it to .csv and another one to plot that same data.
 
 > It ain't much, but it's honest work.
+
+## Plots
+
+![This plot shows the evolution of the pandemic for a series of countries](https://github.com/almenal/covid-r-plots/blob/master/conf_cases_after_100th_patient.svg)
+
+![Here you can see a depiction of the epidemic curves for a series of countries](https://github.com/almenal/covid-r-plots/blob/master/epidemic-curves.svg)
