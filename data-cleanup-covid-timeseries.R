@@ -1,6 +1,4 @@
 library(dplyr)
-library(ggplot2)
-library(plotly)
 library(stringr)
 
 data_conf = read.csv('time_series_covid19_confirmed_global.csv')

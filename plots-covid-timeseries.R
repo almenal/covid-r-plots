@@ -7,7 +7,7 @@ metadata = file.info('covid-cases-timenorm-small.RDS')
 thresh_pat = 100
 
 if(as.Date(metadata$mtime) != Sys.Date()){
-  source('data-cleanup-covid-timeseries.r')
+  source('data-cleanup-covid-timeseries.R')
 }
 
 df_labels = df_sub %>% group_by(loc) %>% 
@@ -63,7 +63,7 @@ p2 = ggplot(df_sub, aes(timenorm_num, y = growth_con_5, col = loc)) +
        title = 'Growth rate of cases by country',
        col = 'Country')
 p2
-plotly::ggplotly(p2)
+#plotly::ggplotly(p2)
 
 ### Detection of kth patient per country -----
 days_sub = days0_sub %>% filter(loc %in% subgroup) %>% arrange(day0) %>%
