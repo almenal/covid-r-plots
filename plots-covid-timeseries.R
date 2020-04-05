@@ -1,3 +1,6 @@
+library(dplyr)
+library(ggplot2)
+
 df_sub = readRDS('covid-cases-timenorm-small.RDS')
 days0_sub = readRDS('covid-day0-small.RDS')
 metadata = file.info('covid-cases-timenorm-small.RDS')
@@ -45,8 +48,8 @@ p1 = ggplot(df_sub, aes(timenorm_num, conf, col = loc)) +
        col = 'Country')
 p1
 
-ggsave(plot = p1, scale = 1.5, filename = paste0('conf_cases_after_', thresh_pat, 'th_patient.svg'))
-ggsave(plot = p1, scale = 1.5, filename = paste0('conf_cases_after_', thresh_pat, 'th_patient.png'))
+ggsave(plot = p1, scale = 2, filename = paste0('conf_cases_after_', thresh_pat, 'th_patient.svg'))
+ggsave(plot = p1, scale = 2, filename = paste0('conf_cases_after_', thresh_pat, 'th_patient.png'))
 
 ### Growth rate evolution ----------
 
@@ -93,5 +96,5 @@ p5 = ggplot(df_sub, aes(x = timenorm_num)) +
   facet_wrap(~loc)
 p5
 
-ggsave('epidemic-curves.svg', plot=p5, scale = 1.5)
-ggsave('epidemic-curves.png', plot=p5, scale = 1.5)
+ggsave('epidemic-curves.svg', plot=p5, scale = 1.65)
+ggsave('epidemic-curves.png', plot=p5, scale = 1.65)
