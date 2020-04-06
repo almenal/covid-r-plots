@@ -3,13 +3,13 @@
 library(dplyr)
 library(ggplot2)
 
-df_sub = readRDS('../RDSdata/covid-cases-timenorm-small.RDS')
-days0_sub = readRDS('../RDSdata/covid-day0-small.RDS')
-metadata = file.info('../RDSdata/covid-cases-timenorm-small.RDS')
+df_sub = readRDS('../RDS-data/covid-cases-timenorm-small.RDS')
+days0_sub = readRDS('../RDS-data/covid-day0-small.RDS')
+metadata = file.info('../RDS-data/covid-cases-timenorm-small.RDS')
 thresh_pat = 100
 
 if(as.Date(metadata$mtime) != Sys.Date()){
-  source('data-cleanup-covid-timeseries.R')
+  source('data-cleanup-covid-timeseries.r')
 }
 
 df_labels = df_sub %>% group_by(loc) %>% 

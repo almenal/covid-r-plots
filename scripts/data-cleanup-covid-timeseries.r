@@ -283,8 +283,8 @@ mutate(growth_con_1 = replace(growth_con_1, growth_con_1 == Inf, NaN),
        active = conf - died - recov)
 
 
-saveRDS(df_norm, file = 'covid-cases-timenorm.RDS') # Save the data in R format
-write.csv(df_norm, file = 'covid-cases-timenorm.csv') # Save it as csv
+saveRDS(df_norm, file = '../RDS-data/covid-cases-timenorm.RDS') # Save the data in R format
+write.csv(df_norm, file = '../csv-data/covid-cases-timenorm.csv') # Save it as csv
 
 #### List of each country and its day 0 -------------
 
@@ -320,7 +320,7 @@ subgroup = setNames(nm = sort(c('Spain', 'Italy', 'Germany', 'United Kingdom_glo
 df_sub = df_norm %>% filter(loc %in% subgroup)
 days0_sub = days0 %>% filter(loc %in% subgroup)
 
-saveRDS(days0, file = 'covid-day0.RDS')
-saveRDS(days0_sub, file = 'covid-day0-small.RDS')
-saveRDS(df_sub, file = 'covid-cases-timenorm-small.RDS')
-write.csv(df_sub, file = 'covid-cases-timenorm-small.csv')
+saveRDS(days0, file = '../RDS-data/covid-day0.RDS')
+saveRDS(days0_sub, file = '../RDS-data/covid-day0-small.RDS')
+saveRDS(df_sub, file = '../RDS-data/covid-cases-timenorm-small.RDS')
+write.csv(df_sub, file = '../csv-data/covid-cases-timenorm-small.csv')
