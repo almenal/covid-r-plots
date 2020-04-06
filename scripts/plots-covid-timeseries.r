@@ -66,7 +66,7 @@ p2 = ggplot(df_sub, aes(timenorm_num, y = growth_con_5, col = loc)) +
        col = 'Country')
 p2
 p2p = plotly::ggplotly(p2)
-
+pdf(NULL) # Prevent the automatic generation of "Rplots.pdf"
 htmlwidgets::saveWidget(plotly::as_widget(p2p), "../plots/growth-rate.html")
 
 ### Detection of kth patient per country -----
