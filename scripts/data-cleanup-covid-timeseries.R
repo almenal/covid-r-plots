@@ -1,9 +1,11 @@
+#!/usr/bin/R
+
 library(dplyr)
 library(stringr)
 
-data_conf = read.csv('time_series_covid19_confirmed_global.csv')
-data_died = read.csv('time_series_covid19_deaths_global.csv')
-data_recov = read.csv('time_series_covid19_recovered_global.csv')
+data_conf = read.csv('../rawdata/time_series_covid19_confirmed_global.csv')
+data_died = read.csv('../rawdata/time_series_covid19_deaths_global.csv')
+data_recov = read.csv('../rawdata/time_series_covid19_recovered_global.csv')
 
 # I realized that there is an inconsistency in the naming of Diamond Princess:
 data_recov = data_recov %>% 

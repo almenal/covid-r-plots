@@ -1,9 +1,11 @@
+#!/usr/bin/R
+
 library(dplyr)
 library(ggplot2)
 
-df_sub = readRDS('covid-cases-timenorm-small.RDS')
-days0_sub = readRDS('covid-day0-small.RDS')
-metadata = file.info('covid-cases-timenorm-small.RDS')
+df_sub = readRDS('../RDSdata/covid-cases-timenorm-small.RDS')
+days0_sub = readRDS('../RDSdata/covid-day0-small.RDS')
+metadata = file.info('../RDSdata/covid-cases-timenorm-small.RDS')
 thresh_pat = 100
 
 if(as.Date(metadata$mtime) != Sys.Date()){
@@ -48,8 +50,8 @@ p1 = ggplot(df_sub, aes(timenorm_num, conf, col = loc)) +
        col = 'Country')
 p1
 
-ggsave(plot = p1, scale = 2, filename = paste0('conf_cases_after_', thresh_pat, 'th_patient.svg'))
-ggsave(plot = p1, scale = 2, filename = paste0('conf_cases_after_', thresh_pat, 'th_patient.png'))
+ggsave(plot = p1, scale = 2, filename = paste0('../plots/conf_cases_after_', thresh_pat, 'th_patient.svg'))
+ggsave(plot = p1, scale = 2, filename = paste0('../plots/conf_cases_after_', thresh_pat, 'th_patient.png'))
 
 ### Growth rate evolution ----------
 
@@ -63,7 +65,9 @@ p2 = ggplot(df_sub, aes(timenorm_num, y = growth_con_5, col = loc)) +
        title = 'Growth rate of cases by country',
        col = 'Country')
 p2
-#plotly::ggplotly(p2)
+p2p = plotly::ggplotly(p2)
+
+htmlwidgets::saveWidget(plotly::as_widget(p2p), "../plots/growth-rate.html")
 
 ### Detection of kth patient per country -----
 days_sub = days0_sub %>% filter(loc %in% subgroup) %>% arrange(day0) %>%
@@ -96,5 +100,5 @@ p5 = ggplot(df_sub, aes(x = timenorm_num)) +
   facet_wrap(~loc)
 p5
 
-ggsave('epidemic-curves.svg', plot=p5, scale = 1.65)
-ggsave('epidemic-curves.png', plot=p5, scale = 1.65)
+ggsave('../plots/epidemic-curves.svg', plot=p5, scale = 1.65)
+ggsave('../plots/epidemic-curves.png', plot=p5, scale = 1.65)

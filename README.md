@@ -13,7 +13,9 @@ For now, this repo consists in one script reshaping the data as a ggplot-friendl
 ## Plots
 
 ### Evolution of cumulative number of cases
-![This plot shows the evolution of the pandemic for a series of countries](https://github.com/almenal/covid-r-plots/blob/master/conf_cases_after_100th_patient.png)
+![This plot shows the evolution of the pandemic for a series of countries](https://github.com/almenal/covid-r-plots/blob/master/plots/conf_cases_after_100th_patient.png)
 
 ### Epidemic curves of some countries
-![Here you can see a depiction of the epidemic curves for a series of countries](https://github.com/almenal/covid-r-plots/blob/master/epidemic-curves.png)
+![Here you can see a depiction of the epidemic curves for a series of countries](https://github.com/almenal/covid-r-plots/blob/master/plots/epidemic-curves.png)
+
+![GrowthRate](https://github.com/almenal/covid-r-plots/blob/master/plots/growth-rate.html)
