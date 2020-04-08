@@ -48,10 +48,13 @@ p1 = ggplot(df_sub, aes(timenorm_num, conf, col = loc)) +
   labs(x = paste0('Days after detection of ', thresh_pat, 'th case'), 
        title = 'Number of confirmed cases by country',
        col = 'Country')
+
 p1
 
-ggsave(plot = p1, scale = 2, filename = paste0('../plots/conf_cases_after_', thresh_pat, 'th_patient.svg'))
-ggsave(plot = p1, scale = 2, filename = paste0('../plots/conf_cases_after_', thresh_pat, 'th_patient.png'))
+ggsave(plot = p1, width = 1920/320, height = 1080/320, units = 'in', scale = 1.75,
+       filename = paste0('../plots/conf_cases_after_', thresh_pat, 'th_patient.svg'))
+ggsave(plot = p1, filename = paste0('../plots/conf_cases_after_', thresh_pat, 'th_patient.png'),
+       dpi = 300, width = 1920/300, height = 1080/300, units = 'in', scale = 1.75)
 
 ### Growth rate evolution ----------
 
