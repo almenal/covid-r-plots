@@ -89,12 +89,13 @@ p4 = ggplot(df_sub, aes(x = timenorm_num, y = active, col = loc)) +
   geom_point() + geom_line()
 p4
 
-cols = c('Active' = 'orange', 'Recovered-cumul' = 'darkgreen', 'Died-cumul' = 'red', 'Total-cumul' = 'darkgrey')
+#F8766D
+cols = c('Active' = '#E08B00', 'Recovered-cumul' = '#7CAE00', 'Died-cumul' = 'red', 'Total-cumul' = 'darkgrey')
 p5 = ggplot(df_sub, aes(x = timenorm_num)) + 
-  geom_col(aes(y = conf, fill = 'Total-cumul'), alpha = .4) + 
+  geom_col(aes(y = conf, fill = 'Total-cumul'), alpha = 1) + 
   geom_col(aes(y = active, fill = 'Active'), alpha = 1) + 
-  geom_col(aes(y = died, fill = 'Died-cumul'), alpha = .9) + 
-  geom_col(aes(y = recov, fill = 'Recovered-cumul'), alpha = .5) + 
+  geom_col(aes(y = recov, fill = 'Recovered-cumul'), alpha = 1) + 
+  geom_col(aes(y = died, fill = 'Died-cumul'), alpha = 1) + 
   scale_fill_manual(name="Legend",values=cols) + 
   theme(legend.position = 'top')+
   facet_wrap(~loc)
