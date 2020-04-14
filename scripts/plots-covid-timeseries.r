@@ -3,6 +3,7 @@
 library(dplyr)
 library(ggplot2)
 
+setwd("~/Documents/covid-r-plots/scripts")
 df_sub = readRDS('../RDS-data/covid-cases-timenorm-small.RDS')
 days0_sub = readRDS('../RDS-data/covid-day0-small.RDS')
 metadata = file.info('../RDS-data/covid-cases-timenorm-small.RDS')
@@ -68,9 +69,12 @@ p2 = ggplot(df_sub, aes(timenorm_num, y = growth_con_5, col = loc)) +
        title = 'Growth rate of cases by country',
        col = 'Country')
 p2
+ggsave(plot = p1, filename = '../plots/growth-rates.png',
+       dpi = 300, width = 1920/300, height = 1080/300, units = 'in', scale = 1.75)
+
 p2p = plotly::ggplotly(p2)
 pdf(NULL) # Prevent the automatic generation of "Rplots.pdf"
-htmlwidgets::saveWidget(plotly::as_widget(p2p), "../plots/growth-rate.html")
+#htmlwidgets::saveWidget(plotly::as_widget(p2p), "../plots/growth-rate.html")
 
 ### Detection of kth patient per country -----
 days_sub = days0_sub %>% filter(loc %in% subgroup) %>% arrange(day0) %>%

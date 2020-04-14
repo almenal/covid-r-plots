@@ -1,5 +1,6 @@
 #!/usr/bin/R
 
+setwd("~/Documents/covid-r-plots/scripts")
 library(dplyr)
 library(stringr)
 
