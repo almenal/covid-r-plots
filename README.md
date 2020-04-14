@@ -18,4 +18,3 @@ For now, this repo consists in one script reshaping the data as a ggplot-friendl
 ### Epidemic curves of some countries
 ![Here you can see a depiction of the epidemic curves for a series of countries](https://github.com/almenal/covid-r-plots/blob/master/plots/epidemic-curves.png)
 
-![GrowthRate](https://github.com/almenal/covid-r-plots/blob/master/plots/growth-rate.html)
