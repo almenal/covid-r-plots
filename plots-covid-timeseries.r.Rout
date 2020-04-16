@@ -1,0 +1,68 @@
+
+R version 3.6.1 (2019-07-05) -- "Action of the Toes"
+Copyright (C) 2019 The R Foundation for Statistical Computing
+Platform: x86_64-conda_cos6-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> #!/usr/bin/R
+> 
+> library(dplyr)
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+> library(ggplot2)
+Registered S3 methods overwritten by 'ggplot2':
+  method         from 
+  [.quosures     rlang
+  c.quosures     rlang
+  print.quosures rlang
+> 
+> setwd("~/Documents/covid-r-plots/scripts")
+> df_sub = readRDS('../RDS-data/covid-cases-timenorm-small.RDS')
+> days0_sub = readRDS('../RDS-data/covid-day0-small.RDS')
+> metadata = file.info('../RDS-data/covid-cases-timenorm-small.RDS')
+> thresh_pat = 100
+> 
+> if(as.Date(metadata$mtime) != Sys.Date()){
++   source('data-cleanup-covid-timeseries.r')
++ }
+> 
+> df_labels = df_sub %>% group_by(loc) %>% 
++   summarise(conf = max(conf), maxtimediff = max(timenorm),
++             growth_con_1 = max(growth_con_1, na.rm = T),
++             growth_con_5 = max(growth_con_5, na.rm = T),
++             latestday = max(time_base)) %>%
++   mutate(day0 = days0_sub$day0)
+> 
+> subgroup = setNames(nm = sort(c('Spain', 'Italy', 'Germany', 'United Kingdom_global', 'Netherlands_global', 'China_global'), decreasing = F) )
+> maxgrowthdaynorm = sapply(subgroup, function(x){
++   maxgrowth = df_sub %>% filter(loc == x) %>% select(growth_con_1) %>% max(na.rm = T)
++   day = df_sub %>% filter(loc == x, growth_con_1 == maxgrowth) %>% select(timenorm_num) %>% unlist()
++   return(day)
++ }) %>%
++   mutate(maxgrowthday = maxgrowthdaynorm)
+Error in UseMethod("mutate_") : 
+  no applicable method for 'mutate_' applied to an object of class "c('double', 'numeric')"
+Calls: %>% ... withVisible -> <Anonymous> -> mutate -> mutate.default -> mutate_
+Execution halted
