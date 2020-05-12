@@ -76,6 +76,25 @@ pdf(NULL) # Prevent the automatic generation of "Rplots.pdf"
 #p2p = plotly::ggplotly(p2)
 #htmlwidgets::saveWidget(plotly::as_widget(p2p), "../plots/growth-rate.html")
 
+# Growth rates of last 20 days
+cur_date = max(df_sub$time_base)
+p2_5 = ggplot(df_sub %>% filter(time_base >= (cur_date - 30)), 
+              aes(x = time_base, y = growth_con_5, col = loc)) + 
+  geom_line() + geom_point(size = 1) +
+  scale_x_date(breaks = "3 days") + 
+  theme_grey() + 
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.6)) + 
+  labs(x = paste0('Days after detection of ', thresh_pat, 'th case'),
+       y = 'Growth rate respective to previous 5 days',
+       title = 'Growth rate of cases by country (last 30 days)',
+       col = 'Country')
+#p2_5
+ggsave(plot = p2_5, filename = '../plots/growth-rates-recent.png',
+       dpi = 300, width = 1920/300, height = 1080/300, units = 'in', scale = 1.75)
+
+pdf(NULL) # Prevent the automatic generation of "Rplots.pdf"
+
+
 ### Detection of kth patient per country -----
 days_sub = days0_sub %>% filter(loc %in% subgroup) %>% arrange(day0) %>%
   mutate(loc = factor(loc, levels = loc))
@@ -99,12 +118,12 @@ p4 = ggplot(df_sub, aes(x = timenorm_num, y = active, col = loc)) +
 #F8766D
 cols = c('Active' = '#E08B00', 'Recovered-cumul' = '#7CAE00', 'Died-cumul' = 'red', 'Total-cumul' = 'darkgrey')
 p5 = ggplot(df_sub, aes(x = timenorm_num)) + 
-  geom_col(aes(y = conf, fill = 'Total-cumul'), alpha = 1) + 
-  geom_col(aes(y = active, fill = 'Active'), alpha = 1) + 
-  geom_col(aes(y = recov, fill = 'Recovered-cumul'), alpha = 1) + 
-  geom_col(aes(y = died, fill = 'Died-cumul'), alpha = 1) + 
+  geom_col(aes(y = recov, fill = 'Recovered-cumul'), alpha = .7) + 
+  geom_col(aes(y = active, fill = 'Active'), alpha = .7) + 
+  geom_col(aes(y = died, fill = 'Died-cumul'), alpha = .7) + 
   scale_fill_manual(name="Legend",values=cols) + 
-  theme(legend.position = 'top')+
+  labs(y = "", x = paste0('Days after detection of ', thresh_pat, 'th case')) +
+  theme(legend.position = 'top') +
   facet_wrap(~loc)
 #p5
 
