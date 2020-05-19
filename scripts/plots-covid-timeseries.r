@@ -116,6 +116,7 @@ p4 = ggplot(df_sub, aes(x = timenorm_num, y = active, col = loc)) +
 #p4
 
 #F8766D
+
 cols = c('Active' = '#E08B00', 'Recovered-cumul' = '#7CAE00', 'Died-cumul' = 'red', 'Total-cumul' = 'darkgrey')
 p5 = ggplot(df_sub, aes(x = timenorm_num)) + 
   geom_col(aes(y = recov, fill = 'Recovered-cumul'), alpha = .7) + 
@@ -129,3 +130,14 @@ p5 = ggplot(df_sub, aes(x = timenorm_num)) +
 
 ggsave('../plots/epidemic-curves.svg', plot=p5, scale = 1.65)
 ggsave('../plots/epidemic-curves.png', plot=p5, scale = 1.65)
+
+# UK epidemic curve
+df_sub %>%
+  filter(loc == "United Kingdom_global") %>%
+  ggplot(., aes(x = timenorm_num)) + 
+  geom_col(aes(y = active, fill = 'Active'), alpha = .7) + 
+  geom_col(aes(y = died, fill = 'Died-cumul'), alpha = .7) + 
+  geom_col(aes(y = recov, fill = 'Recovered-cumul'), alpha = .7) + 
+  scale_fill_manual(name="Legend",values=cols) + 
+  labs(y = "", x = paste0('Days after detection of ', thresh_pat, 'th case')) +
+  theme(legend.position = 'top')
