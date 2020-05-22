@@ -123,10 +123,11 @@ p5 = ggplot(df_sub, aes(x = timenorm_num)) +
   geom_col(aes(y = active, fill = 'Active'), alpha = .7) + 
   geom_col(aes(y = died, fill = 'Died-cumul'), alpha = .7) + 
   scale_fill_manual(name="Legend",values=cols) + 
+  scale_y_continuous(labels = scales::label_number()) +
   labs(y = "", x = paste0('Days after detection of ', thresh_pat, 'th case')) +
   theme(legend.position = 'top') +
-  facet_wrap(~loc)
-#p5
+  facet_wrap(~loc, scales = "free")
+p5
 
 ggsave('../plots/epidemic-curves.svg', plot=p5, scale = 1.65)
 ggsave('../plots/epidemic-curves.png', plot=p5, scale = 1.65)
