@@ -142,3 +142,14 @@ df_sub %>%
   scale_fill_manual(name="Legend",values=cols) + 
   labs(y = "", x = paste0('Days after detection of ', thresh_pat, 'th case')) +
   theme(legend.position = 'top')
+
+# Spain epidemic curve
+df_sub %>%
+  filter(loc == "Spain") %>%
+  ggplot(., aes(x = timenorm_num)) + 
+  geom_col(aes(y = recov, fill = 'Recovered-cumul'), alpha = .7) + 
+  geom_col(aes(y = active, fill = 'Active'), alpha = .7, col = "black", size = 0.25) + 
+  geom_col(aes(y = died, fill = 'Died-cumul'), alpha = .7) + 
+  scale_fill_manual(name="Legend",values=cols) + 
+  labs(y = "", x = paste0('Days after detection of ', thresh_pat, 'th case')) +
+  theme(legend.position = 'top')
