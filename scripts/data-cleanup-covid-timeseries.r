@@ -317,7 +317,7 @@ days0 = lapply(dfl, function(x){
 }) %>% bind_rows()
 
 ### Smaller dataframe with """"""relevant"""""" countries -------
-subgroup = setNames(nm = sort(c('Spain', 'Italy', 'Germany', 'United Kingdom_global', 'Netherlands_global', 'China_global'), decreasing = F) )
+subgroup = setNames(nm = sort(c('Spain', 'Italy', 'Germany', 'United Kingdom_global', 'US', 'Brazil', 'Netherlands_global', 'China_global'), decreasing = F) )
 df_sub = df_norm %>% filter(loc %in% subgroup)
 days0_sub = days0 %>% filter(loc %in% subgroup)
 

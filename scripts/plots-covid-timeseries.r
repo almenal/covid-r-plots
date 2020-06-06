@@ -20,7 +20,7 @@ df_labels = df_sub %>% group_by(loc) %>%
             latestday = max(time_base)) %>%
   mutate(day0 = days0_sub$day0)
 
-subgroup = setNames(nm = sort(c('Spain', 'Italy', 'Germany', 'United Kingdom_global', 'Netherlands_global', 'China_global'), decreasing = F) )
+subgroup = setNames(nm = sort(as.character(unique(df_sub$loc)), decreasing = F) )
 maxgrowthdaynorm = sapply(subgroup, function(x){
   maxgrowth = df_sub %>% filter(loc == x) %>% select(growth_con_1) %>% max(na.rm = T)
   day = df_sub %>% filter(loc == x, growth_con_1 == maxgrowth) %>% select(timenorm_num) %>% unlist()
@@ -126,11 +126,10 @@ p5 = ggplot(df_sub, aes(x = timenorm_num)) +
   scale_y_continuous(labels = scales::label_number()) +
   labs(y = "", x = paste0('Days after detection of ', thresh_pat, 'th case')) +
   theme(legend.position = 'top') +
-  facet_wrap(~loc, scales = "free")
-p5
+  facet_wrap(~loc, scales = "free", ncol = 2)
 
 ggsave('../plots/epidemic-curves.svg', plot=p5, scale = 1.65)
-ggsave('../plots/epidemic-curves.png', plot=p5, scale = 1.65)
+ggsave('../plots/epidemic-curves.png', plot=p5, width = 9, height = 16)
 
 # UK epidemic curve
 df_sub %>%
@@ -148,7 +147,7 @@ df_sub %>%
   filter(loc == "Spain") %>%
   ggplot(., aes(x = timenorm_num)) + 
   geom_col(aes(y = recov, fill = 'Recovered-cumul'), alpha = .7) + 
-  geom_col(aes(y = active, fill = 'Active'), alpha = .7, col = "black", size = 0.25) + 
+  geom_col(aes(y = active, fill = 'Active'), alpha = .7, color = 'black', size = 0.25) + 
   geom_col(aes(y = died, fill = 'Died-cumul'), alpha = .7) + 
   scale_fill_manual(name="Legend",values=cols) + 
   labs(y = "", x = paste0('Days after detection of ', thresh_pat, 'th case')) +
