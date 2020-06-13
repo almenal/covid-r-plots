@@ -135,7 +135,7 @@ ggsave('../plots/epidemic-curves.png', plot=p5, width = 9, height = 16)
 df_sub %>%
   filter(loc == "United Kingdom_global") %>%
   ggplot(., aes(x = timenorm_num)) + 
-  geom_col(aes(y = active, fill = 'Active'), alpha = .7) + 
+  geom_col(aes(y = active, fill = 'Active'), alpha = .7, col = 'black', lwd = .15) + 
   geom_col(aes(y = died, fill = 'Died-cumul'), alpha = .7) + 
   geom_col(aes(y = recov, fill = 'Recovered-cumul'), alpha = .7) + 
   scale_fill_manual(name="Legend",values=cols) + 
