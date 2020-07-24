@@ -22,5 +22,8 @@ For now, this repo consists in one script reshaping the data as a ggplot-friendl
 ![](https://github.com/almenal/covid-r-plots/blob/master/plots/growth-rates-recent.png)
 
 ### Epidemic curves of some countries
+
+> Note that countries like the UK or the USA do not report active cases, only the cumulative ones, so the graphs are not directly comparable with the ones from the other countries.
+
 ![](https://github.com/almenal/covid-r-plots/blob/master/plots/epidemic-curves.png)
 
