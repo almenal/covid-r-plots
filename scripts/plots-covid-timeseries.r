@@ -131,24 +131,30 @@ p5 = ggplot(df_sub, aes(x = timenorm_num)) +
 ggsave('../plots/epidemic-curves.svg', plot=p5, scale = 1.65)
 ggsave('../plots/epidemic-curves.png', plot=p5, width = 9, height = 16)
 
-# UK epidemic curve
+# New detected cases
 df_sub %>%
-  filter(loc == "United Kingdom_global") %>%
+  #filter(loc == "United Kingdom_global") %>%
+  filter(loc == "Spain") %>%
+  mutate('new' = c(NA, diff(conf))) %>%
   ggplot(., aes(x = timenorm_num)) + 
-  geom_col(aes(y = active, fill = 'Active'), alpha = .7, col = 'black', lwd = .15) + 
-  geom_col(aes(y = died, fill = 'Died-cumul'), alpha = .7) + 
-  geom_col(aes(y = recov, fill = 'Recovered-cumul'), alpha = .7) + 
+  geom_col(aes(y = new, fill = 'Active'), alpha = .7, col = 'black', lwd = .15) + 
+  #geom_col(aes(y = died, fill = 'Died-cumul'), alpha = .7) + 
+  #geom_col(aes(y = recov, fill = 'Recovered-cumul'), alpha = .7) + 
   scale_fill_manual(name="Legend",values=cols) + 
   labs(y = "", x = paste0('Days after detection of ', thresh_pat, 'th case')) +
   theme(legend.position = 'top')
 
+
 # Spain epidemic curve
 df_sub %>%
-  filter(loc == "Spain") %>%
-  ggplot(., aes(x = timenorm_num)) + 
+  #filter(loc == "Italy", time_base >= (Sys.Date() - 30)) %>%
+  filter(loc == "Spain", timenorm_num >= 1) %>%
+  ggplot(., aes(x = time_base)) + 
   geom_col(aes(y = recov, fill = 'Recovered-cumul'), alpha = .7) + 
-  geom_col(aes(y = active, fill = 'Active'), alpha = .7, color = 'black', size = 0.25) + 
+  #geom_col(aes(y = active, fill = 'Active'), alpha = .7, color = 'black', size = 0.25) +
+  geom_col(aes(y = active, fill = 'Active'), alpha = .7) + 
   geom_col(aes(y = died, fill = 'Died-cumul'), alpha = .7) + 
+  geom_line(aes(y = active), col = 'black', lwd = .5) +
   scale_fill_manual(name="Legend",values=cols) + 
   labs(y = "", x = paste0('Days after detection of ', thresh_pat, 'th case')) +
-  theme(legend.position = 'top')
+  theme(legend.position = 'top', axis.text.x = element_text(angle = 45))
