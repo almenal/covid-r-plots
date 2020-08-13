@@ -147,7 +147,7 @@ df_sub %>%
 
 # Spain epidemic curve
 df_sub %>%
-  #filter(loc == "Italy", time_base >= (Sys.Date() - 30)) %>%
+  #filter(loc == "Spain", time_base >= (Sys.Date() - 30)) %>%
   filter(loc == "Spain", timenorm_num >= 1) %>%
   ggplot(., aes(x = time_base)) + 
   geom_col(aes(y = recov, fill = 'Recovered-cumul'), alpha = .7) + 
