@@ -145,12 +145,12 @@ df_sub %>%
   theme(legend.position = 'top')
 
 
-# Spain epidemic curve
+# Italy epidemic curve
 df_sub %>%
   #filter(loc == "Spain", time_base >= (Sys.Date() - 30)) %>%
-  filter(loc == "Spain", timenorm_num >= 1) %>%
+  filter(loc == "Italy", timenorm_num >= 1) %>%
   ggplot(., aes(x = time_base)) + 
-  geom_col(aes(y = recov, fill = 'Recovered-cumul'), alpha = .7) + 
+  #geom_col(aes(y = recov, fill = 'Recovered-cumul'), alpha = .7) + 
   #geom_col(aes(y = active, fill = 'Active'), alpha = .7, color = 'black', size = 0.25) +
   geom_col(aes(y = active, fill = 'Active'), alpha = .7) + 
   geom_col(aes(y = died, fill = 'Died-cumul'), alpha = .7) + 
@@ -158,3 +158,61 @@ df_sub %>%
   scale_fill_manual(name="Legend",values=cols) + 
   labs(y = "", x = paste0('Days after detection of ', thresh_pat, 'th case')) +
   theme(legend.position = 'top', axis.text.x = element_text(angle = 45))
+
+
+#
+# plot for Vale
+#
+
+#pandemic_start = df_sub %>% filter(loc == 'Italy', timenorm_num == 0) %>% select(time_base) %>% unlist() %>% as.Date(origin = "1970-01-01")
+cols = c('Active' = '#E08B00', 'Recovered-cumul' = '#7CAE00', 'Died-cumul' = 'red', 'Total-cumul' = 'darkgrey')
+p_cumul = df_sub %>%
+  filter(loc == "Italy", timenorm_num >= 1) %>%
+  ggplot(., aes(x = time_base)) + 
+  geom_col(aes(y = conf, fill = 'Total-cumul'), alpha = .7) + 
+  geom_col(aes(y = died, fill = 'Died-cumul'), alpha = .7) + 
+  geom_vline(aes(xintercept = as.Date("2020-03-09")), linetype = 2) +
+  annotate(x = as.Date("2020-03-09"), hjust = 0.5, geom = 'label',
+           y = df_sub[which(df_sub$loc == 'Italy' & df_sub$time_base == max(df_sub$time_base)), 'conf'],
+           label = "Lockdown starts") +
+  geom_vline(aes(xintercept = as.Date("2020-05-04")), linetype = 2) +
+  annotate(x = as.Date("2020-05-04"), hjust = 0.5, geom = 'label',
+           y = df_sub[which(df_sub$loc == 'Italy' & df_sub$time_base == max(df_sub$time_base)), 'conf'],
+           label = "Lockdown ends") + 
+  scale_fill_manual(name="Legend", values=cols) + 
+  scale_y_continuous(labels = scales::label_number()) + 
+  scale_x_date(breaks = c(as.Date(c("2020-03-09", "2020-05-04")),
+                           seq(min(df_italy_new$time_base), max(df_italy_new$time_base), length.out = 6))
+               ) + 
+  labs(y = "", x = "") +
+  theme(legend.position = 'top', axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+
+cols_2 = c('New cases' = '#E08B00', 'New deaths' = 'red')
+df_italy_new = df_sub %>%
+  filter(loc == "Italy", timenorm_num >= 1) %>%
+  mutate('new_cases' = c(NA, diff(conf)),
+         'new_deaths' = c(NA, diff(died))) %>%
+  select(time_base, new_cases, new_deaths)
+
+p_new = ggplot(df_italy_new, aes(x = time_base)) + 
+  geom_col(aes(y = new_cases, fill = 'New cases'), alpha = .7) + 
+  geom_col(aes(y = new_deaths, fill = 'New deaths'), alpha = .7) + 
+  #geom_line(aes(y = new_cases), col = 'black', lwd = .5) +
+  geom_vline(aes(xintercept = as.Date("2020-03-09")), linetype = 2) +
+  annotate(x = as.Date("2020-03-09"), hjust = 0.5, geom = 'label',
+           y = max(df_italy_new[, 2:3], na.rm = T),
+           label = "Lockdown starts") +
+  geom_vline(aes(xintercept = as.Date("2020-05-04")), linetype = 2) +
+  annotate(x = as.Date("2020-05-04"), hjust = 0.5, geom = 'label',
+           y = max(df_italy_new[, 2:3], na.rm = T),
+           label = "Lockdown ends") + 
+  scale_fill_manual(name="Legend", values=cols_2) + 
+  scale_x_date(breaks = c(as.Date(c("2020-03-09", "2020-05-04")),
+                          seq(min(df_italy_new$time_base), max(df_italy_new$time_base), length.out = 6))
+  ) + 
+  scale_y_continuous(labels = scales::label_number()) + 
+  labs(y = "", x = "") +
+  theme(legend.position = 'top', axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+
+p_combi = gridExtra::arrangeGrob(grobs = list(p_cumul, p_new), ncol = 2)
+#ggsave('~/Documents/covid-r-plots/italy-new-cumul-cases-deaths.png', plot = p_combi, height = 7, width = 14)
