@@ -131,7 +131,7 @@ if(length(countries_conf) < length(countries_recov)){
     
     #
     #
-    #   CONTINUE HERE!!!!!!!!
+    #   CONTINUE HERE
     #
     #
     
