@@ -1,7 +1,5 @@
 # covid-r-plots
 
-## Welcome to my first Git repository!
-
 Hi! You will find a couple of R scripts that I've been writing about the SARS-CoV-2 epidemic that originated in China in late 2019 (more notoriously known as *Coronavirus*).
 
 I got the raw data from the [John's Hopkins University's repository](https://github.com/CSSEGISandData/COVID-19) and worked with it using `R`.
